@@ -2,10 +2,12 @@
 Advent of Code 2023
 Day 2: Cube Conundrum
 '''
+
 # Open file and read content
 f = open('input.txt', 'r')
 lines = f.readlines()
 f.close()
+
 # remove new lines
 content = []
 for l in lines:
@@ -53,7 +55,6 @@ def total_good_games(content):
 print("Awnser part 1: ", total_good_games(content))
 
 # Part 2: what is the fewest number of cubes of each color that could have been in the bag to make the game possible?
-
 def min_cubes(content):
   '''  '''
   total = 0

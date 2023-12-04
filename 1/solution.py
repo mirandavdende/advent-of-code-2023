@@ -1,6 +1,6 @@
 ''' 
 Advent of Code 2023
-Day 1: Day 1: Trebuchet?!
+Day 1: Trebuchet?!
 '''
 
 # Open file and read content
