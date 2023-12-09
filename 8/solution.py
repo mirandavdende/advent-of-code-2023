@@ -93,4 +93,3 @@ def find_lcm(numbers):
 result_lcm = find_lcm(step_list)
 
 print("The solution for part two is:", result_lcm)
-# fout: 20803 (too low), 33458567957100 (too high)
