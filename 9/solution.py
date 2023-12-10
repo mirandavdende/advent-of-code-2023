@@ -2,16 +2,7 @@
 Advent of Code 2023
 Day 9: Mirage Maintenance
 '''
-def read_file(file):
-    ''' Open file, read content and remove new lines'''
-    f = open(file, 'r')
-    lines = f.readlines()
-    f.close()
-    content = []
-    for l in lines:
-        if l != '\n':
-            content.append(l.replace("\n", " "))
-    return content
+from helpers.files import read_file
 
 def make_number_lists(input):
     number_lists = []
@@ -52,7 +43,7 @@ def history_extrapolated_values(lists):
             break
     return first_value
 
-content = read_file('input.txt')
+content = read_file('9/input.txt')
 number_lists = make_number_lists(content)
 
 total = 0
