@@ -44,6 +44,25 @@ def expand_galaxy(input):
             expand += 1
     return output
 
+def expanding_coordinates(input):
+    cor_rows = []
+    rows = 0
+    for line in input: # rows
+        if all(i == "." for i in line):
+            cor_rows.append(rows)
+        rows +=1
+    cor_cols = []
+    cols = 0
+    for x in range(len(input[0])): # x = col number
+        col = []
+        for y in range(len(input)): # y = row number
+            col.append(input[y][x])
+        if all(i == "." for i in col): 
+            cor_cols.append(cols)
+        cols += 1
+    exp_cor = [cor_rows] +  [cor_cols]
+    return exp_cor
+
 def get_coordinates(input):
     locations = []
     for row in range(len(input)): # rows
@@ -67,14 +86,52 @@ def calulate_distance(input):
             # print(cor1, cor2, distance)
     return distance_list
 
+def calulate_distance_2(input, cor_exp):
+    expand_distance = 999999
+    cor_rows = cor_exp[0]
+    cor_cols = cor_exp[1]
+    distance_list = []
+    for x in range(len(input)):
+        cor1 = input[x]
+        for n in range(x+1, len(input)):
+            cor2 = input[n]
+            distance = abs(cor1[0] - cor2[0]) + abs(cor1[1] - cor2[1])
+            # rows tussenliggende nummers tussen 1 en 0 --> 1 geen expand
+            for row in range(cor1[0], cor2[0]):
+                if row in cor_rows:
+                    distance += expand_distance
+            # col: tussenliggende nummers tussen 3 en 7 --> expand op 5
+            if cor1[1] < cor2[1]:
+                for col in range(cor1[1], cor2[1]):
+                    if col in cor_cols:
+                        distance += expand_distance
+            else:
+                for col in range(cor2[1], cor1[1]):
+                    if col in cor_cols:
+                        distance += expand_distance
+            distance_list.append(distance)
+            # print(cor1, cor2, distance)
+    return distance_list
+
 # Part 1: Farthest position of the loop
 # empty space (.) and galaxies (#)
-content = single_char_list(read_file('test.txt'))
+content = single_char_list(read_file('input.txt'))
 # exapand galaxy
 expand_content = expand_galaxy(content)
 # Get coordinates of all galaxies
 cor_content = get_coordinates(expand_content)
 # What is the sum of these lengths?
-print(sum(calulate_distance(cor_content))) #9274989
+distance_list = calulate_distance(cor_content)
+print("The solution for part one is:", sum(distance_list))
 
-# Test: there are 36 pairs of galaxies, the sum of the steps is 374.
+# Part 2: Galaxies expand by 1000000
+# get coordinates of galaxies
+cor_gal = (get_coordinates(content))
+# get rows and columns that expand
+cor_exp = (expanding_coordinates(content))
+# calculate distance and sum
+distance_list = calulate_distance_2(cor_gal, cor_exp)
+print("The solution for part two is:", sum(distance_list)) 
+
+
+
